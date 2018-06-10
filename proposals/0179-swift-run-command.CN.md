@@ -13,7 +13,7 @@
 
 The proposal introduces a new `swift run` command to build and run an executable defined in the current package.
 
-该提案引入一个新的 `swift run` 命令，用于编译和运行当前包中定义的可执行文件。
+本提案引入一个新的 `swift run` 命令，用于编译和运行当前包中定义的可执行文件。
 
 ## Motivation 动机
 
@@ -28,11 +28,11 @@ $ .build/debug/myexecutable
 
 In Swift 4, the Swift Package Manager will build to a different path, containing a platform sub-folder (`.build/macosx-x86_64/debug` for mac and `.build/linux-x86_64/debug` for linux), making it more cumbersome to run the executable from the command line.
 
-在 Swift 4 中，Swift 包管理器（SPM）的编译路径与之前有所不同，将包含一个平台子文件夹（Mac 下为 `.build/macosx-x86_64/debug`，Linux 下为 `.build/linux-x86_64/debug`），这将导致要在命令行中执行编译后的可执行文件会更加繁琐。
+在 Swift 4 中，Swift 包管理器（SwiftPM）的编译路径与之前有所不同，将包含一个平台子文件夹（Mac 下为 `.build/macosx-x86_64/debug`，Linux 下为 `.build/linux-x86_64/debug`），这将导致要在命令行中执行编译后的可执行文件会更加繁琐。
 
 To improve the development workflow, the proposal suggests introducing a new first-level `swift run` command that will build if necessary and then run an executable defined in the `Package.swift` manifest, reducing the above steps to just one.
 
-为了改进开发工作流程，这个提案建议引入一个新的 `swift run` 一级命令，它会先进行编译（如果需要），然后运行 `Package.swift` 清单中定义的可执行文件，减少上述步骤至只要一步。
+为了改进开发工作流程，本提案建议引入一个新的 `swift run` 一级命令，它会先进行编译（如果需要），然后运行 `Package.swift` 清单中定义的可执行文件，减少上述步骤至只要一步。
 
 ## Proposed solution 建议的解决方案
 
@@ -62,11 +62,11 @@ OPTIONS:
 
 If needed, the command will build the product before running it. As a result, it can be passed any options `swift build` accepts. As for `swift test`, it also accepts an extra `--skip-build` option to skip the build phase.
 
-如果必要，该命令会在运行产品之前对其先进行编译。因此，它可以被传递任何 `swift build` 命令所接受的参数选项。对于 `swift test` 命令，同样可接受一个额外的 `--skip-build` 来跳过编译过程。
+如果必要，该命令会在运行产品之前对其先进行编译。因此，它可以被传递任何 `swift build` 命令所接收的参数选项。对于 `swift test` 命令，同样可接收一个额外的 `--skip-build` 来跳过编译过程。
 
 After the options, the command optionally takes the name of an executable product defined in the `Package.swift` manifest and introduced in [SE-0146](0146-package-manager-product-definitions.md). If called without an executable and the manifest defines one and only one executable product, it will default to running that one. In any other case, the command fails.
 
-在 options 之后，该命令可选地接受在 [SE-0146](0146-package-manager-product-definitions.md) 引入的 `Package.swift` 清单中所定义的可执行产品的名称。如果调用该命令时没有传递一个可执行文件，那么它会默认执行清单中所唯一定义的那个可执行产品。除此之外其他情况，命令都会报错。
+在 options 之后，该命令可选地接收在 [SE-0146](0146-package-manager-product-definitions.md) 引入的 `Package.swift` 清单中所定义的可执行产品的名称。如果调用该命令时没有传递一个可执行文件，那么它会默认执行清单中所唯一定义的那个可执行产品。除此之外其他情况，命令都会报错。
 
 If the executable is explicitly defined, all remaining arguments are passed as-is to the executable.
 
